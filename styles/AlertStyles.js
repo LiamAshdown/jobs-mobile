@@ -6,12 +6,10 @@ export default StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingLeft: 10,
-    gap: 5,
     padding: 10,
+    gap: 5,
   },
-  text: {
-    paddingTop: 0,
-  },
+  text: {},
   error: {
     borderWidth: 1,
     borderColor: "#f00",

@@ -7,6 +7,14 @@ export default {
       password,
     });
 
-    return response.data;
+    return response;
+  },
+  login: async ({ email, password }) => {
+    const response = await base.post("/auth/login", {
+      email,
+      password,
+    });
+
+    return response;
   },
 };

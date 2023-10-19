@@ -14,3 +14,16 @@ export const registerUser = createAsyncThunk(
     }
   },
 );
+
+export const loginUser = createAsyncThunk(
+  "auth/login",
+  async ({ email, password }, { rejectWithValue }) => {
+    try {
+      const response = await api.auth.login({ email, password });
+
+      return response;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  },
+);

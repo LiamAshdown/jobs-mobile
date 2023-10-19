@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Alert from "../components/Alert";
 import { registerUser } from "../store/auth/actions";
+import { resetAuth } from "../store/auth/reducer";
 import { hasError, isLoading } from "../store/auth/selectors";
 import AuthStyles from "../styles/AuthStyles";
 
@@ -18,10 +19,8 @@ const RegisterScreen = ({ navigation }) => {
 
   const dispatch = useDispatch();
 
-  // console.log("error", error);
-  //console.log(error.errors.email);
-
   const onSignUpPressed = () => {
+    dispatch(resetAuth());
     navigation.navigate("Login");
   };
 
@@ -37,7 +36,7 @@ const RegisterScreen = ({ navigation }) => {
     <View style={AuthStyles.container}>
       <View>
         <Text style={AuthStyles.header}>Register</Text>
-        {error && error.message && (
+        {error.message && (
           <Alert
             message={error.message}
             style={AuthStyles.alert}
@@ -69,6 +68,7 @@ const RegisterScreen = ({ navigation }) => {
                   onPress={onShowPasswordPressed}
                 />
               }
+              error={error.errors && error.errors.password}
             />
             <HelperText
               type="error"
