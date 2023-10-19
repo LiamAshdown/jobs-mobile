@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
 import { useDispatch, useSelector } from "react-redux";
 
 import CreateUpdateJobForm from "../../components/jobs/CreateUpdateJobForm";
-import { createJob } from "../../store/jobs/actions";
+import { updateJob } from "../../store/jobs/actions";
 import { hasError, isLoading } from "../../store/jobs/selectors";
 
-const CreateJobScreen = ({ navigation }) => {
+const UpdateJobScreen = ({ route, navigation }) => {
   const [form, setForm] = useState({
+    id: "",
     title: "",
     company: "",
-    salary: "",
+    salary: 0,
     description: "",
   });
 
@@ -19,13 +20,13 @@ const CreateJobScreen = ({ navigation }) => {
   const error = useSelector(hasError);
 
   const handleSubmit = async () => {
-    const response = await dispatch(createJob(form));
+    const response = await dispatch(updateJob(form));
 
-    if (response.type === "jobs/create/fulfilled") {
+    if (response.type === "jobs/update/fulfilled") {
       Toast.show({
         type: "success",
         text1: "Success!",
-        text2: "Job post created successfully!",
+        text2: "Job updated successfully!",
         position: "bottom",
       });
       navigation.navigate("View Jobs");
@@ -36,6 +37,16 @@ const CreateJobScreen = ({ navigation }) => {
     setForm({ ...form, [key]: value });
   };
 
+  useEffect(() => {
+    const { job } = route.params;
+    setForm({
+      ...job,
+      salary: job.salary.toString(),
+    });
+  }, []);
+
+  console.log("form", form);
+
   return (
     <CreateUpdateJobForm
       form={form}
@@ -43,9 +54,9 @@ const CreateJobScreen = ({ navigation }) => {
       handleSubmit={handleSubmit}
       loading={loading}
       error={error}
-      creating
+      creating={false}
     />
   );
 };
 
-export default CreateJobScreen;
+export default UpdateJobScreen;

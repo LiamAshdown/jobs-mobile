@@ -10,4 +10,10 @@ export default StyleSheet.create({
   seperator: {
     height: 10,
   },
+  empty: {
+    marginTop: 20,
+  },
+  emptyText: {
+    textAlign: "center",
+  },
 });

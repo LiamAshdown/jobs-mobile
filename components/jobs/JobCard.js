@@ -5,17 +5,15 @@ import { IconButton, MD3Colors, Surface, Text } from "react-native-paper";
 import JobCardStyles from "../../styles/jobs/JobCardStyles";
 import Divider from "../Divider";
 
-const JobCard = ({ job }) => {
+const JobCard = ({ job, onEdit, onDelete }) => {
   return (
     <Surface style={JobCardStyles.container}>
       <View>
         <View style={JobCardStyles.headerContainer}>
           <View style={JobCardStyles.titleContainer}>
-            <Text style={JobCardStyles.titleText}>
-              {job.title}{" "}
-              <Text variant="bodySmall" style={JobCardStyles.companyText}>
-                by {job.company}
-              </Text>
+            <Text style={JobCardStyles.titleText}>{job.title} </Text>
+            <Text variant="bodySmall" style={JobCardStyles.companyText}>
+              by {job.company}
             </Text>
           </View>
           <View style={JobCardStyles.actionsContainer}>
@@ -24,7 +22,7 @@ const JobCard = ({ job }) => {
                 icon="trash-can-outline"
                 iconColor={MD3Colors.error50}
                 size={20}
-                onPress={() => console.log("Pressed")}
+                onPress={() => onDelete(job.id)}
               />
             </View>
             <View>
@@ -32,7 +30,7 @@ const JobCard = ({ job }) => {
                 icon="pencil"
                 iconColor={MD3Colors.primary50}
                 size={20}
-                onPress={() => console.log("Pressed")}
+                onPress={() => onEdit(job)}
               />
             </View>
           </View>

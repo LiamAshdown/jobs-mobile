@@ -26,7 +26,6 @@ apiService.interceptors.response.use(
     return response.data;
   },
   (error) => {
-    console.log("error", error);
     // Check if it's a network error
     if (!error.response) {
       // eslint-disable-next-line prefer-promise-reject-errors

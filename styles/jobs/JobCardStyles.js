@@ -15,6 +15,7 @@ export default StyleSheet.create({
   headerContainer: {
     display: "flex",
     flexDirection: "row",
+    alignItems: "center",
     justifyContent: "space-between",
   },
   titleContainer: {},
@@ -25,6 +26,7 @@ export default StyleSheet.create({
   },
   companyText: {
     color: TEXT_LIGHT_GREY,
+    marginLeft: 5,
   },
   dateText: {
     color: TEXT_LIGHT_GREY,
