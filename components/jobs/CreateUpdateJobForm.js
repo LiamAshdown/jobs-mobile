@@ -13,7 +13,6 @@ const CreateUpdateJobForm = ({
   error,
   creating,
 }) => {
-  console.log(form.salary);
   return (
     <View style={CreateJobStyles.container}>
       <Text variant="titleLarge" style={CreateJobStyles.title}>
@@ -82,17 +81,17 @@ const CreateUpdateJobForm = ({
       <View style={CreateJobStyles.input}>
         <TextInput
           label="Salary"
-          value={form.salary}
+          value={form.salary.toString()}
           keyboardType="numeric"
           onChangeText={(text) => onUpdateInput("salary", text)}
           error={error.errors && error.errors.salary}
         />
         <HelperText
-          type={error.errors && error.errors.company ? "error" : "info"}
+          type={error.errors && error.errors.salary ? "error" : "info"}
           visible
         >
-          {error.errors && error.errors.company
-            ? error.errors.company
+          {error.errors && error.errors.salary
+            ? error.errors.salary
             : "This will be the annual salary"}
         </HelperText>
       </View>

@@ -6,6 +6,10 @@ import JobCardStyles from "../../styles/jobs/JobCardStyles";
 import Divider from "../Divider";
 
 const JobCard = ({ job, onEdit, onDelete }) => {
+  const formatSalary = (salary) => {
+    return salary.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+
   return (
     <Surface style={JobCardStyles.container}>
       <View>
@@ -42,7 +46,9 @@ const JobCard = ({ job, onEdit, onDelete }) => {
           <Text style={JobCardStyles.dateText}>
             {job.human_readable_created_at}
           </Text>
-          <Text style={JobCardStyles.salaryText}>£{job.salary}</Text>
+          <Text style={JobCardStyles.salaryText}>
+            £{formatSalary(job.salary)}
+          </Text>
         </View>
       </View>
     </Surface>
