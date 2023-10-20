@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { FlatList, RefreshControl, View } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { Animated, FlatList, RefreshControl, View } from "react-native";
 import { Text } from "react-native-paper";
 import Toast from "react-native-toast-message";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,6 +18,8 @@ const ViewJobsScreen = ({ navigation }) => {
   const loading = useSelector(isLoading);
   const [showModal, setShowModal] = useState(false);
   const [jobToDelete, setJobToDelete] = useState(null);
+
+  const animationValue = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     dispatch(getJobs());
@@ -54,8 +56,33 @@ const ViewJobsScreen = ({ navigation }) => {
     setJobToDelete(null);
   };
 
-  const onRefresh = () => {
-    dispatch(getJobs());
+  const onRefresh = async () => {
+    await dispatch(getJobs());
+    animateCard();
+  };
+
+  const animateCard = () => {
+    animationValue.setValue(0);
+    Animated.timing(animationValue, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  useEffect(() => {
+    animateCard();
+  }, []);
+
+  const cardAnimation = {
+    transform: [
+      {
+        translateY: animationValue.interpolate({
+          inputRange: [0, 1],
+          outputRange: [500, 0],
+        }),
+      },
+    ],
   };
 
   return (
@@ -65,7 +92,9 @@ const ViewJobsScreen = ({ navigation }) => {
           <FlatList
             data={jobs}
             renderItem={({ item }) => (
-              <Card job={item} onEdit={onEdit} onDelete={onDelete} />
+              <Animated.View style={cardAnimation}>
+                <Card job={item} onEdit={onEdit} onDelete={onDelete} />
+              </Animated.View>
             )}
             ItemSeparatorComponent={() => (
               <View style={ViewJobsStyles.seperator} />
